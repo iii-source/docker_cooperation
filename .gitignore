@@ -1,0 +1,7 @@
+.idea
+DB/initdb/
+
+__pycache__
+log/*
+.env
+

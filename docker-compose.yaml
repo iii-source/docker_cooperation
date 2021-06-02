@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    build: DB/
+    # <Host IP>:<Host Port>:<Container Port>
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./DB/initdb:/docker-entrypoint-initdb.d
+
+  ap:
+    depends_on:
+      - db
+    build:
+      context: AP/
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - 5000:5000
+    stdin_open: true
+
