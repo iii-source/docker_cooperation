@@ -20,7 +20,8 @@ RUN echo $PYTHONPATH
 
 RUN echo hi Comment ctermfg=DarkGreen >> ~/.vimrc
 
-# TODO
-# RUN python3 server/app.py & python3 -m pytest
+ARG DATABASE_URL_DEV
+ENV DATABASE_URL ${DATABASE_URL_DEV}
 
-
+# DBコンテナの接続が完了するまでペンディングする
+CMD ["bash", "wait-for-postgres.sh"]
